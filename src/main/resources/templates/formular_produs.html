@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Formular Produs</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+</head>
+<body class="container mt-5">
+
+<div class="card" style="max-width: 600px; margin: auto;">
+    <div class="card-header bg-info text-white">
+        <h3 class="text-center" th:if="${produs.id == null}">Adaugă Produs Nou</h3>
+        <h3 class="text-center" th:unless="${produs.id == null}">Editează Produs</h3>
+    </div>
+
+    <div class="card-body">
+        <form th:action="@{/produse/salveaza}" th:object="${produs}" method="post">
+
+            <input type="hidden" th:field="*{id}" />
+
+            <div class="form-group">
+                <label>Nume Produs</label>
+                <input type="text" th:field="*{numeProdus}" class="form-control" required placeholder="ex: Lash Sensational" />
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>Brand</label>
+                    <input type="text" th:field="*{brand}" class="form-control" required placeholder="ex: Maybelline" />
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Categorie</label>
+                    <input type="text" th:field="*{categorie}" class="form-control" placeholder="ex: Mascara" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Tip Produs / Detalii</label>
+                <input type="text" th:field="*{tipProdus}" class="form-control" placeholder="ex: Waterproof" />
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label>Data Expirare</label>
+                    <input type="date" th:field="*{dataExpirare}" class="form-control" />
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Preț (RON)</label>
+                    <input type="number" step="0.01" th:field="*{pret}" class="form-control" required />
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Stoc</label>
+                    <input type="number" th:field="*{stoc}" class="form-control" required />
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-success btn-block">Salvează Produsul</button>
+        </form>
+    </div>
+    <div class="card-footer text-center">
+        <a href="/produse" class="btn btn-link">Înapoi la listă</a>
+    </div>
+</div>
+
+</body>
+</html>

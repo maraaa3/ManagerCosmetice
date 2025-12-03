@@ -3,6 +3,7 @@ package com.proiect.ManagerCosmetice.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -26,6 +27,7 @@ public class Produs {
 
     private String tipProdus;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataExpirare;
 
     private Double pret;

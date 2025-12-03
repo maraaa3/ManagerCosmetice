@@ -1,104 +1,131 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Manager Cosmetice</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+
+    <style>
+        body {
+            background-color: #fff0f6; /* fundal roz */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.2); /* Umbra */
+        }
+        .text-pink {
+            color: #d63384;
+        }
+        /* Buton roz */
+        .btn-pink {
+            background-color: #ff69b4;
+            border-color: #ff69b4;
+            color: white;
+            border-radius: 20px;
+        }
+        .btn-pink:hover {
+            background-color: #e05297;
+            color: white;
+        }
+        /* Capul de tabel */
+        .thead-pink {
+            background-color: #ffc0cb;
+            color: #880e4f;
+        }
+        .badge-pink {
+            background-color: #ffe4e1;
+            color: #d63384;
+        }
+    </style>
 </head>
 <body class="container mt-4">
 
-<div class="text-center mb-4">
-    <h2>Stoc Produse Cosmetice <div class="text-right">
-        <form th:action="@{/logout}" method="post">
-            <button type="submit" class="btn btn-sm btn-outline-danger"> Logout</button>
-        </form>
-    </div></h2>
-    <p class="text-muted">Gestionează inventarul tău simplu și rapid</p>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="text-pink font-weight-bold">🌸 Stoc Cosmetice </h2>
+        <p class="text-muted">
+            Bună, <span sec:authentication="principal.nume" class="font-weight-bold text-pink">User</span>!
+            <span class="badge badge-info" sec:authorize="hasRole('ROLE_EDITOR')">EDITOR</span>
+            <span class="badge badge-secondary" sec:authorize="hasRole('ROLE_USER')">VISITOR</span>
+        </p>
+    </div>
+
+    <form th:action="@{/logout}" method="post">
+        <button type="submit" class="btn btn-outline-danger" style="border-radius: 20px;"> Ieșire</button>
+    </form>
 </div>
 
-<div class="card p-3 mb-4 bg-light shadow-sm">
+<div class="card p-4 mb-4 bg-white">
     <form action="/produse" method="get" class="form-row align-items-center justify-content-center">
-
         <div class="col-auto">
-            <input type="text" name="brand" th:value="${brandSelectat}"
-                   class="form-control" placeholder="Caută Brand...">
+            <input type="text" name="brand" th:value="${brandSelectat}" class="form-control"
+                   placeholder="Caută Brand... ">
         </div>
-
         <div class="col-auto">
-            <input type="text" name="categorie" th:value="${categorieSelectata}"
-                   class="form-control" placeholder="Caută Categorie...">
+            <input type="text" name="categorie" th:value="${categorieSelectata}" class="form-control"
+                   placeholder="Caută Categorie... ">
         </div>
-
         <div class="col-auto">
-            <input type="text" name="tip" th:value="${tipSelectat}"
-                   class="form-control" placeholder="Caută Tip...">
+            <input type="text" name="tip" th:value="${tipSelectat}" class="form-control" placeholder="Caută Tip... ">
         </div>
-
         <div class="col-auto">
-            <button type="submit" class="btn btn-primary"> Filtrează</button>
-            <a href="/produse" class="btn btn-outline-secondary">Resetează</a>
+            <button type="submit" class="btn btn-pink px-4"> Caută</button>
+            <a href="/produse" class="btn btn-link text-pink">Resetează</a>
         </div>
     </form>
 </div>
 
-<div class="d-flex justify-content-between mb-3">
-    <span class="h5 align-self-center text-info">Lista curentă:</span>
-    <a href="/produse/nou" class="btn btn-success font-weight-bold shadow-sm">
+<div class="d-flex justify-content-between mb-3" sec:authorize="hasRole('ROLE_EDITOR')">
+    <span class="h5 align-self-center text-pink">Produsele Tale:</span>
+    <a href="/produse/nou" class="btn btn-success font-weight-bold shadow-sm" style="border-radius: 20px;">
         + Adaugă Produs Nou
     </a>
 </div>
 
-<div class="table-responsive">
-    <table class="table table-bordered table-hover">
-        <thead class="thead-dark">
+<div class="table-responsive card p-0 overflow-hidden">
+    <table class="table table-hover mb-0">
+        <thead class="thead-pink">
         <tr>
             <th>Nume Produs</th>
             <th>Brand</th>
             <th>Categorie</th>
-            <th>Tip / Detalii</th>
+            <th>Detalii</th>
             <th>Expiră la</th>
             <th>Preț</th>
             <th>Stoc</th>
-            <th style="width: 180px;">Acțiuni</th>
+            <th style="width: 180px;" sec:authorize="hasRole('ROLE_EDITOR')">Acțiuni</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody class="bg-white">
         <tr th:each="produs : ${listaProduse}">
-
-            <td th:text="${produs.numeProdus}" class="font-weight-bold"></td>
+            <td th:text="${produs.numeProdus}" class="font-weight-bold text-dark"></td>
             <td th:text="${produs.brand}"></td>
-
-            <td>
-                <span class="badge badge-light" style="font-size: 0.9em" th:text="${produs.categorie}"></span>
-            </td>
-
+            <td><span class="badge badge-pink p-2" th:text="${produs.categorie}"></span></td>
             <td th:text="${produs.tipProdus}"></td>
 
             <td th:text="${produs.dataExpirare != null} ? ${#temporals.format(produs.dataExpirare, 'dd-MM-yyyy')} : 'Nespecificat'"></td>
-            <td th:text="${produs.pret} + ' RON'"></td>
+
+            <td th:text="${produs.pret} + ' RON'" class="font-weight-bold text-pink"></td>
 
             <td th:switch="${produs.stoc < 5}">
-                <span th:case="true" class="text-danger font-weight-bold" th:text="${produs.stoc} + ' (Limitat!)'"></span>
+                <span th:case="true" class="text-danger font-weight-bold" th:text="${produs.stoc} + ' (!)'"></span>
                 <span th:case="false" class="text-success" th:text="${produs.stoc}"></span>
             </td>
 
-            <td>
-                <a th:href="@{/produse/editeaza/{id}(id=${produs.id})}" class="btn btn-sm btn-info">
-                    Edit
-                </a>
-
-                <a th:href="@{/produse/sterge/{id}(id=${produs.id})}" class="btn btn-sm btn-danger"
-                   onclick="return confirm('Ești sigur că vrei să ștergi acest produs din stoc?');">
-                    Sterge
-                </a>
+            <td sec:authorize="hasRole('ROLE_EDITOR')">
+                <a th:href="@{/produse/editeaza/{id}(id=${produs.id})}" class="btn btn-sm btn-info rounded-pill">✏️</a>
+                <a th:href="@{/produse/sterge/{id}(id=${produs.id})}" class="btn btn-sm btn-danger rounded-pill ml-1"
+                   onclick="return confirm('Sigur vrei să ștergi?')">🗑</a>
             </td>
         </tr>
         </tbody>
     </table>
 </div>
 
-<div th:if="${listaProduse.empty}" class="alert alert-warning text-center mt-4">
-    <h4>Nu am găsit niciun produs! </h4>
-    <p>Încearcă să schimbi filtrele sau adaugă produse noi în stoc.</p>
+<div th:if="${listaProduse.empty}" class="alert alert-light text-center mt-4 border-pink">
+    <h4 class="text-pink">Nu am găsit produse! </h4>
 </div>
 
 </body>

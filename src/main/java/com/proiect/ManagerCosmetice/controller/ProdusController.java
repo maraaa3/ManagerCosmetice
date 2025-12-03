@@ -15,7 +15,7 @@ public class ProdusController {
     @Autowired
     private ProdusService produsService;
 
-    //http://localhost:8080/produse
+    //http://localhost:8081/produse
     @GetMapping("/produse")
     public String arataProdusele(
             @RequestParam(required = false) String brand,

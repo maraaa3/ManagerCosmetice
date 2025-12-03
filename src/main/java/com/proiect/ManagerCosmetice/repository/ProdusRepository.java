@@ -12,9 +12,9 @@ import java.util.List;
 public interface ProdusRepository extends JpaRepository<Produs, Long> {
 
     @Query("SELECT p FROM Produs p WHERE " +
-            "(:brand IS NULL OR p.brand LIKE %:brand%) AND " +
-            "(:categorie IS NULL OR p.categorie LIKE %:categorie%) AND " +
-            "(:tip IS NULL OR p.tipProdus LIKE %:tip%)")
+            "(:brand IS NULL OR p.brand LIKE :brand%) AND " +
+            "(:categorie IS NULL OR p.categorie LIKE :categorie%) AND " +
+            "(:tip IS NULL OR p.tipProdus LIKE :tip%)")
     List<Produs> filtreazaProduse(@Param("brand") String brand,
                                   @Param("categorie") String categorie,
                                   @Param("tip") String tip);
