@@ -6,9 +6,9 @@ public class GeneratorParola {
     public static void main(String[] args) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-        String parolaCriptata = encoder.encode("alina");
+        String parolaCriptata = encoder.encode("user");
 
-        System.out.println("Parola ta criptată este:");
+        System.out.println("Parola criptata este:");
         System.out.println(parolaCriptata);
     }
 }

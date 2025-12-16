@@ -20,16 +20,11 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
-
-                        .requestMatchers("/produse/nou", "/produse/salveaza", "/produse/editeaza/**", "/produse/sterge/**")
-                        .hasRole("EDITOR")
-
-                        .requestMatchers("/produse").hasAnyRole("USER", "EDITOR")
-
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/login", "/css/**", "/js/**").permitAll()
+                        .requestMatchers("/produse/nou/**", "/produse/editeaza/**", "/produse/sterge/**").hasRole("EDITOR")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -38,7 +33,6 @@ public class SecurityConfig {
                         .permitAll()
                 )
                 .logout(logout -> logout
-                        .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout")
                         .permitAll()
                 );

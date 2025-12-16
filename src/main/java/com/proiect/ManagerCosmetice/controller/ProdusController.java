@@ -59,4 +59,9 @@ public class ProdusController {
         produsService.stergeProdus(id);
         return "redirect:/produse";
     }
+
+    @GetMapping("/login")
+    public String afiseazaPaginaLogin() {
+        return "login";
+    }
 }
