@@ -10,6 +10,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+/**
+ * aici stabilim regulile de acces (cine are voie să șteargă produse etc.),
+ * autetificam userii, verificam daca parola introdusa se potriveste cu cea din baza de date
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {

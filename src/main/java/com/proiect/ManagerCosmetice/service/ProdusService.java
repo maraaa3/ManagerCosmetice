@@ -7,6 +7,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Conține "logica de business" a magazinului;
+ * se ocupă de prelucrarea datelor și aplicarea filtrelor de căutare
+ * înainte de a le trimite spre afișare.
+ */
+
 @Service
 public class ProdusService {
 

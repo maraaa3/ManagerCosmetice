@@ -4,6 +4,11 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Reprezintă utilizatorul aplicației, stocând datele de autentificare
+ * și rolul acestuia (EDITOR sau USER).
+ **/
+
 @Entity
 @Table(name = "utilizatori")
 @Data

@@ -4,30 +4,57 @@ import com.proiect.ManagerCosmetice.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import java.util.Collection;
 import java.util.Collections;
+
+/**
+ * Ne permite să accesăm și numele real al persoanei în paginile HTML
+ */
 
 public class CustomUserDetails implements UserDetails {
     private final User user;
 
-    public CustomUserDetails(User user) { this.user = user; }
+    public CustomUserDetails(User user) {
+        this.user = user;
+    }
 
-    public String getNume() { return user.getNume(); }
+    public String getNume() {
+        return user.getNume();
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority(user.getRol()));
     }
+
     @Override
-    public String getPassword() { return user.getParola(); }
+    public String getPassword() {
+        return user.getParola();
+    }
+
     @Override
-    public String getUsername() { return user.getUtilizator(); }
+    public String getUsername() {
+        return user.getUtilizator();
+    }
+
     @Override
-    public boolean isAccountNonExpired() { return true; }
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
     @Override
-    public boolean isAccountNonLocked() { return true; }
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
     @Override
-    public boolean isCredentialsNonExpired() { return true; }
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
     @Override
-    public boolean isEnabled() { return true; }
+    public boolean isEnabled() {
+        return true;
+    }
 }

@@ -8,6 +8,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * Interfață care extinde JpaRepository
+ * și gestionează comunicarea directă cu baza de date
+ */
 @Repository
 public interface ProdusRepository extends JpaRepository<Produs, Long> {
 

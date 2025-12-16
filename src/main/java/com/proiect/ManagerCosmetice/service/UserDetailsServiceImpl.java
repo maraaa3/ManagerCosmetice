@@ -9,6 +9,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import com.proiect.ManagerCosmetice.security.CustomUserDetails;
 
+/**
+ * face legătura între formularul de login și baza de date;
+ * el verifică dacă username-ul introdus există
+ * și returnează datele necesare pentru validarea parolei.
+ */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired

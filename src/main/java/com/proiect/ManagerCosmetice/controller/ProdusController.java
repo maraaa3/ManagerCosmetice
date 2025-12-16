@@ -9,6 +9,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * primește cererile de tip http,
+ * apelează Service-ul pentru date
+ * și decide ce pagină HTML să afișeze utilizatorului (Listă, Formular sau Login).
+ */
 @Controller
 public class ProdusController {
 

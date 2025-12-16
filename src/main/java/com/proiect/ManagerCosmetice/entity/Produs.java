@@ -7,6 +7,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
+/**
+ *Definește structura unui produs cosmetic
+ * și mapează aceste câmpuri direct pe tabelul produse din baza de date.
+ */
+
 @Entity
 @Table(name = "produse")
 @Data
